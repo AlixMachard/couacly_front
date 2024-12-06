@@ -1,0 +1,16 @@
+{
+    "title": "Sign In to Your Account",
+    "text": "Access your account to manage your settings, track your progress, and more.",
+    "button": "Sign In",
+    "section": [
+      {
+        "title": "New User?",
+        "text": "Create an account to enjoy all our features."
+      },
+      {
+        "title": "Forgot Password?",
+        "text": "Recover your password with a few clicks."
+      }
+    ]
+  }
+  
