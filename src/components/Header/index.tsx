@@ -31,6 +31,12 @@ const Header = ({ t }: { t: TFunction }) => {
       });
       setVisibility(false);
     };
+
+    const redirectToSignIn = () => {
+      window.location.href = "/sign-in/";
+      setVisibility(false);
+    };
+
     return (
       <>
         <CustomNavLinkSmall onClick={() => scrollTo("about")}>
@@ -44,10 +50,10 @@ const Header = ({ t }: { t: TFunction }) => {
         </CustomNavLinkSmall>
         <CustomNavLinkSmall
           style={{ width: "180px" }}
-          onClick={() => scrollTo("contact")}
+          onClick={redirectToSignIn}
         >
           <Span>
-            <Button>{t("Contact")}</Button>
+            <Button>{t("Sign In")}</Button>
           </Span>
         </CustomNavLinkSmall>
       </>
