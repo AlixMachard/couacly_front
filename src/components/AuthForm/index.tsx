@@ -14,6 +14,8 @@ import {
   ButtonContainer,
   ContentWrapper,
 } from "./styles";
+import Swal from 'sweetalert2';
+
 
 interface AuthFormProps {
   isCreatingAccount: boolean;
@@ -40,18 +42,36 @@ const AuthForm: React.FC<AuthFormProps> = ({ isCreatingAccount, toggleForm }) =>
           email,
           password,
         });
-        alert("Account created successfully!");
+        Swal.fire({
+          title: "Account created successfully !",
+          icon: "success",
+          confirmButtonText: 'Go to home',
+        }).then(function() {
+          window.location.href = "/";
+        });
       } else {
         // Log in and store the token
         const response = await axios.post(`${API_URL}/login/`, { email, password });
         const { access_token } = response.data;
         localStorage.setItem("token", access_token);
-        alert("Signed in successfully!");
+        Swal.fire({
+          title: "You successfully logged in !",
+          icon: "success",
+          confirmButtonText: 'Go to home',
+        }).then(function() {
+          window.location.href = "/";
+        });
+      
       }
     } catch (error: any) {
       console.error(error);
       const message = error.response?.data?.detail || "An error occurred. Please try again.";
-      alert(message);
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Something went wrong. Please try again later.',
+          confirmButtonText: 'Okay',
+      });
     } finally {
       setLoading(false); // Hide loading
     }
