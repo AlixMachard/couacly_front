@@ -37,11 +37,12 @@ const AuthForm: React.FC<AuthFormProps> = ({ isCreatingAccount, toggleForm }) =>
     try {
       if (isCreatingAccount) {
         // Create a new account
-        await axios.post(`${API_URL}/users/`, {
+        const response = await axios.post(`${API_URL}/users/`, {
           full_name: fullName,
           email,
           password,
         });
+        localStorage.setItem("token", response.data.access_token);
         Swal.fire({
           title: "Account created successfully !",
           icon: "success",

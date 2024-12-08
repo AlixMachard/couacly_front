@@ -15,12 +15,24 @@ import {
   Outline,
   Span,
 } from "./styles";
+import { useAuth } from "../../auth";
 
 const Header = ({ t }: { t: TFunction }) => {
   const [visible, setVisibility] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   const toggleButton = () => {
     setVisibility(!visible);
+  };
+
+  const redirectToSignIn = () => {
+    window.location.href = "/sign-in/";
+    setVisibility(false);
+  };
+
+  const redirectToAccount = () => {
+    window.location.href = "/account/";
+    setVisibility(false);
   };
 
   const MenuItem = () => {
@@ -29,11 +41,6 @@ const Header = ({ t }: { t: TFunction }) => {
       element.scrollIntoView({
         behavior: "smooth",
       });
-      setVisibility(false);
-    };
-
-    const redirectToSignIn = () => {
-      window.location.href = "/sign-in/";
       setVisibility(false);
     };
 
@@ -48,14 +55,27 @@ const Header = ({ t }: { t: TFunction }) => {
         <CustomNavLinkSmall onClick={() => scrollTo("product")}>
           <Span>{t("Product")}</Span>
         </CustomNavLinkSmall>
-        <CustomNavLinkSmall
-          style={{ width: "180px" }}
-          onClick={redirectToSignIn}
-        >
-          <Span>
-            <Button>{t("Sign In")}</Button>
-          </Span>
-        </CustomNavLinkSmall>
+        {isAuthenticated ? (
+          <>
+            <CustomNavLinkSmall onClick={redirectToAccount}>
+              <Span>{t("Account")}</Span>
+            </CustomNavLinkSmall>
+            <CustomNavLinkSmall style={{ width: "180px" }} onClick={logout}>
+              <Span>
+                <Button>{t("Sign Out")}</Button>
+              </Span>
+            </CustomNavLinkSmall>
+          </>
+        ) : (
+          <CustomNavLinkSmall
+            style={{ width: "180px" }}
+            onClick={redirectToSignIn}
+          >
+            <Span>
+              <Button>{t("Sign In")}</Button>
+            </Span>
+          </CustomNavLinkSmall>
+        )}
       </>
     );
   };
